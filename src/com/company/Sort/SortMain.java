@@ -58,7 +58,7 @@ public class SortMain {
     }
 
     //quickSort 非递归 用栈实现
-    public static void stack(int[] arr, int left, int right){
+    public static void stack(int[] arr, int left, int right) {
         int top = 0;
         int last = 0;
         Stack<Integer> s = new Stack<>();

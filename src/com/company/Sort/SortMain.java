@@ -154,10 +154,94 @@ public class SortMain {
         }
     }
 
+    //直接插入
+    public static void insertionSort(int[] arr){
+        //默认第一个已经排序
+        for(int i = 1; i < arr.length; i++){
+            for(int j = i; j >= 0; j--){
+                if(arr[j] >= arr[j-1]){
+                    break;
+                }
+                int temp = arr[j];
+                arr[j] = arr[j-1];
+                arr[j-1] = temp;
+            }
+        }
+    }
 
+    //希尔排序
+    public static void shellSort(int[] arr){
+        int gap = arr.length / 2;
+        //步长每次缩小一半,直到1
+        for(;gap > 0; gap /= 2){
+            //在当前gap下做插入排序
+            for(int j = 0; (j+gap) < arr.length; j++){
+                for(int k = 0; (k+gap) < arr.length; k+=gap){
+                    if(arr[k] > arr[k+gap]){
+                        int temp = arr[k];
+                        arr[k] = arr[k+gap];
+                        arr[k+gap] = temp;
+                    }
+                }
+            }
+        }
+    }
+
+    //选择排序
+    public static void selectSort(int[] arr){
+        for(int i = 0; i < arr.length; i++){
+            int min = i;
+            for(int j = i+1; j < arr.length; j++){
+                if(arr[j] < arr[min]){
+                    min = j;
+                }
+            }
+            if(min != i){
+                int temp = arr[min];
+                arr[min] = arr[i];
+                arr[i] = temp;
+            }
+        }
+    }
+
+    //归并排序
+    public static int[] mergingSort(int[] arr){
+        if(arr.length <= 1) {
+            return arr;
+        }
+        //等同于 arr.length / 2
+        int num = arr.length >> 1;
+        int[] leftArr = Arrays.copyOfRange(arr, 0, num);
+        int[] rightArr = Arrays.copyOfRange(arr, num, arr.length);
+        //不断拆分为最小单位
+        return mergeTwoArr(mergingSort(leftArr), mergingSort(rightArr));
+    }
+
+    private static int[] mergeTwoArr(int[] leftArr, int[] rightArr) {
+        int i = 0, j = 0, k = 0;
+        //申请存储左右两个数组的辅助数组
+        int[] res = new int[leftArr.length + rightArr.length];
+        //将两个数组中较小的插入辅助数组
+        while(i < leftArr.length && j < rightArr.length){
+            if(leftArr[i] <= rightArr[j]){
+                res[k++] = leftArr[i++];
+            }else{
+                res[k++] = rightArr[j++];
+            }
+        }
+        //将剩余右数组的数据插入辅助数组
+        while (j < rightArr.length){
+            res[k++] = rightArr[j++];
+        }
+        //将剩余左数组的数据插入辅助数组
+        while (i < leftArr.length){
+            res[k++] = leftArr[i++];
+        }
+        return res;
+    };
 
     public static void main(String[] args) {
-        heapSort(array);
-        System.out.println(Arrays.toString(array));
+        mergingSort(array);
+        System.out.println(Arrays.toString(mergingSort(array)));
     }
 }

@@ -19,6 +19,5 @@ public class StaticMain {
 
     public static void main(String[] args) {
         StaticMain test = new StaticMain();
-        //StaticMain.test();
     }
 }
